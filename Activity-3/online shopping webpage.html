@@ -1,0 +1,290 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PinkCart - Online Shopping</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Arial,sans-serif;background:#f6f6f6;color:#29212b}
+header{background:#ff4f9a;color:white;padding:16px 5%;display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap}
+.logo{font-size:30px;font-weight:bold}
+.search{display:flex;flex:1;max-width:550px}
+.search input{width:100%;padding:12px;border:0;border-radius:6px 0 0 6px;font-size:15px}
+.search button{padding:12px 18px;border:0;background:#ffe0ed;cursor:pointer;border-radius:0 6px 6px 0}
+.header-btn{border:0;background:transparent;color:white;font-weight:bold;font-size:16px;cursor:pointer}
+nav{background:#fff;display:flex;justify-content:center;gap:35px;padding:15px;box-shadow:0 2px 5px #ddd;flex-wrap:wrap}
+nav a{color:#4d3040;text-decoration:none;font-weight:bold}
+nav a:hover{color:#ff3290}
+.hero{margin:20px auto;max-width:1250px;background:linear-gradient(110deg,#ffe0ed,#fff0f7,#f9c3df);padding:38px 6%;border-radius:12px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.hero h1{font-size:clamp(28px,4vw,46px);color:#b9236c;margin-bottom:12px}
+.hero p{font-size:17px;margin-bottom:18px}
+.hero img{width:35%;max-height:230px;object-fit:cover;border-radius:12px}
+.pill{background:#ff3290;color:white;padding:12px 20px;border:0;border-radius:7px;font-weight:bold;cursor:pointer}
+.section{max-width:1250px;margin:25px auto;padding:0 15px}
+.section h2{margin-bottom:18px;color:#42243a}
+.categories{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}
+.category{background:white;border-radius:10px;padding:20px 10px;text-align:center;cursor:pointer;border:1px solid #f0dce6}
+.category:hover{border-color:#ff3290;transform:translateY(-2px)}
+.category img{width:100%;height:130px;object-fit:cover;border-radius:7px;margin-bottom:10px}
+.category strong{display:block}
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.filters button,.filters select{padding:10px 15px;border:1px solid #edc8da;background:white;border-radius:20px;cursor:pointer}
+.filters button.active,.filters button:hover{background:#ff3290;color:white}
+#products{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+.card{background:white;border-radius:10px;overflow:hidden;box-shadow:0 2px 8px #0000000c;transition:.2s}
+.card:hover{transform:translateY(-4px);box-shadow:0 5px 16px #00000015}
+.card img{width:100%;height:220px;object-fit:cover;background:#f5edf1;cursor:pointer}
+.details{padding:14px}
+.tag{display:inline-block;background:#ffe0ed;color:#b51d65;padding:5px 8px;border-radius:4px;font-size:12px;margin-bottom:8px}
+.card h3{font-size:16px;margin-bottom:8px}
+.desc{font-size:13px;color:#777;line-height:1.5;min-height:38px}
+.rating{color:#d98700;margin:9px 0;font-size:14px}
+.price{font-size:20px;font-weight:bold}
+.old{font-size:13px;color:#888;text-decoration:line-through;margin-left:6px}
+.discount{font-size:13px;color:#14844c;margin-left:4px}
+.size-label{font-size:13px;margin-top:12px;display:block;font-weight:bold}
+.sizes{display:flex;gap:6px;flex-wrap:wrap;margin:7px 0 12px}
+.size{padding:6px 9px;background:white;border:1px solid #ddd;border-radius:4px;cursor:pointer}
+.size.selected{background:#ff3290;color:white;border-color:#ff3290}
+.card-actions{display:flex;gap:7px}
+.card-actions button{flex:1;padding:10px 4px;border:0;border-radius:5px;cursor:pointer;font-weight:bold;font-size:12px}
+.add{background:#ff3290;color:white}
+.view{background:#ffe4ef;color:#a91b5d}
+#empty{text-align:center;padding:40px;display:none}
+footer{margin-top:45px;background:#321d2a;color:white;padding:30px 5%;text-align:center;line-height:2}
+footer a{color:#ffd0e5}
+#cartCount{background:white;color:#e72880;border-radius:50%;padding:3px 7px;margin-left:4px}
+dialog{border:0;border-radius:12px;padding:0;width:min(650px,94%);margin:auto;box-shadow:0 10px 40px #0005}
+dialog::backdrop{background:#0007}
+.modal{padding:22px}
+.modal-content{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.modal-content img{width:100%;height:290px;object-fit:cover;border-radius:8px}
+.close{float:right;background:#eee;border:0;border-radius:5px;padding:8px 12px;cursor:pointer}
+.modal h2{margin:15px 0}
+.modal p{line-height:1.7;margin-bottom:10px}
+@media(max-width:900px){#products{grid-template-columns:repeat(3,minmax(0,1fr))}.categories{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){header{justify-content:center}.logo{width:100%;text-align:center}.search{order:3;flex-basis:100%}nav{gap:16px}.hero{padding:25px;flex-direction:column;text-align:center}.hero img{width:100%;height:180px}#products{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.card img{height:165px}.details{padding:10px}.price{font-size:17px}.card-actions{flex-direction:column}.modal-content{grid-template-columns:1fr}.modal-content img{height:220px}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">💗 PinkCart</div>
+  <form class="search" id="searchForm">
+    <input id="searchInput" type="search" placeholder="Search clothes, shoes, bags..." aria-label="Search products">
+    <button type="submit">🔍 Search</button>
+  </form>
+  <button class="header-btn" onclick="showCart()">🛒 Cart <span id="cartCount">0</span></button>
+</header>
+
+<nav>
+  <a href="#" onclick="filterCategory('All');return false">Home</a>
+  <a href="#productsSection" onclick="filterCategory('Men')">Men</a>
+  <a href="#productsSection" onclick="filterCategory('Women')">Women</a>
+  <a href="#productsSection" onclick="filterCategory('Kids')">Kids</a>
+  <a href="#productsSection" onclick="filterCategory('Accessories')">Accessories</a>
+  <a href="#productsSection" onclick="filterCategory('Footwear')">Footwear</a>
+</nav>
+
+<section class="hero">
+  <div>
+    <span class="tag">THE PINKCART FASHION FEST</span>
+    <h1>Style That Makes You Smile! 💕</h1>
+    <p>Trendy looks for Men, Women & Kids — all in one place.</p>
+    <p><strong>Up to 50% OFF</strong> on selected styles</p>
+    <button class="pill" onclick="document.getElementById('productsSection').scrollIntoView({behavior:'smooth'})">Shop Now →</button>
+  </div>
+  <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=700&q=80" alt="Fashion clothing store">
+</section>
+
+<section class="section">
+  <h2>🛍️ Shop by Category</h2>
+  <div class="categories">
+    <div class="category" onclick="filterCategory('Women')">
+      <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=400&q=80" alt="Women's fashion">
+      <strong>👗 Women</strong>
+    </div>
+    <div class="category" onclick="filterCategory('Men')">
+      <img src="https://images.unsplash.com/photo-1516257984-b1b4d707412e?auto=format&fit=crop&w=400&q=80" alt="Men's fashion">
+      <strong>👕 Men</strong>
+    </div>
+    <div class="category" onclick="filterCategory('Kids')">
+      <img src="https://images.unsplash.com/photo-1503919005314-30d93d07d823?auto=format&fit=crop&w=400&q=80" alt="Children's fashion">
+      <strong>🧒 Kids</strong>
+    </div>
+    <div class="category" onclick="filterCategory('Accessories')">
+      <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=400&q=80" alt="Fashion accessories">
+      <strong>👜 Accessories</strong>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="productsSection">
+  <h2 id="sectionTitle">✨ Trending Products</h2>
+  <div class="filters">
+    <button class="active" onclick="filterCategory('All',this)">All Products</button>
+    <button onclick="filterCategory('Women',this)">Women</button>
+    <button onclick="filterCategory('Men',this)">Men</button>
+    <button onclick="filterCategory('Kids',this)">Kids</button>
+    <button onclick="filterCategory('Footwear',this)">Footwear</button>
+    <button onclick="filterCategory('Accessories',this)">Accessories</button>
+    <select id="sortSelect" onchange="renderProducts()" aria-label="Sort products">
+      <option value="default">Sort By: Featured</option>
+      <option value="low">Price: Low to High</option>
+      <option value="high">Price: High to Low</option>
+      <option value="rating">Top Rated</option>
+    </select>
+  </div>
+  <div id="products"></div>
+  <div id="empty">😕 No products found. Try another search.</div>
+</section>
+
+<dialog id="productDialog">
+  <div class="modal">
+    <button class="close" onclick="document.getElementById('productDialog').close()">✕ Close</button>
+    <div id="modalBody" style="clear:both;padding-top:18px"></div>
+  </div>
+</dialog>
+
+<footer>
+  <h2>💗 PinkCart</h2>
+  <p>Your happy place for fashion shopping!</p>
+  <p>Men | Women | Kids | Footwear | Accessories</p>
+  <p>Customer Support: support@pinkcart.example</p>
+  <p>© 2026 PinkCart. Student website project.</p>
+</footer>
+
+<script>
+const products = [
+{id:1,name:"Floral Summer Dress",cat:"Women",price:899,old:1499,discount:40,rating:4.5,reviews:128,size:["XS","S","M","L","XL"],desc:"Beautiful floral dress, perfect for everyday outings and parties.",img:"photo-1496747611176-843222e1e57c"},
+{id:2,name:"Classic Denim Jacket",cat:"Men",price:1199,old:1999,discount:40,rating:4.4,reviews:96,size:["S","M","L","XL","XXL"],desc:"A versatile denim jacket for casual everyday style.",img:"photo-1516257984-b1b4d707412e"},
+{id:3,name:"Kids Casual Outfit",cat:"Kids",price:599,old:999,discount:40,rating:4.6,reviews:83,size:["2-3Y","4-5Y","6-7Y","8-9Y"],desc:"Comfortable and colourful everyday wear for kids.",img:"photo-1519238263530-99bdd11df2ea"},
+{id:4,name:"Women's Handbag",cat:"Accessories",price:749,old:1249,discount:40,rating:4.3,reviews:71,size:["Standard"],desc:"A stylish everyday handbag with a spacious design.",img:"photo-1584917865442-de89df76afd3"},
+{id:5,name:"White Casual Sneakers",cat:"Footwear",price:999,old:1599,discount:38,rating:4.7,reviews:215,size:["5","6","7","8","9","10"],desc:"Everyday sneakers with a clean design and comfortable fit.",img:"photo-1542291026-7eec264c27ff",for:"Men"},
+{id:6,name:"Women's Pink Top",cat:"Women",price:449,old:799,discount:44,rating:4.2,reviews:58,size:["XS","S","M","L","XL"],desc:"A soft pink top for casual days and college outfits.",img:"photo-1551163943-3f6a855d1153"},
+{id:7,name:"Men's Cotton T-Shirt",cat:"Men",price:399,old:699,discount:43,rating:4.4,reviews:142,size:["S","M","L","XL","XXL"],desc:"A breathable cotton T-shirt that pairs easily with jeans.",img:"photo-1521572163474-6864f9cf17ab"},
+{id:8,name:"Kids Party Dress",cat:"Kids",price:799,old:1299,discount:38,rating:4.8,reviews:67,size:["2-3Y","4-5Y","6-7Y","8-9Y"],desc:"A lovely party outfit for celebrations and special occasions.",img:"photo-1518837695005-2083093ee35b"},
+{id:9,name:"Women's Running Shoes",cat:"Footwear",price:1099,old:1799,discount:39,rating:4.5,reviews:101,size:["4","5","6","7","8","9"],desc:"Lightweight sporty footwear for everyday activities.",img:"photo-1543163521-1bf539c55dd2",for:"Women"},
+{id:10,name:"Classic Sunglasses",cat:"Accessories",price:299,old:599,discount:50,rating:4.1,reviews:49,size:["Standard"],desc:"A versatile accessory to complete your everyday look.",img:"photo-1511499767150-a48a237f0083"},
+{id:11,name:"Men's Casual Shirt",cat:"Men",price:699,old:1199,discount:42,rating:4.6,reviews:188,size:["S","M","L","XL","XXL"],desc:"A smart casual shirt for college, outings and everyday wear.",img:"photo-1603252109303-2751441dd157"},
+{id:12,name:"Women's Handbag Tote",cat:"Accessories",price:899,old:1499,discount:40,rating:4.5,reviews:92,size:["Standard"],desc:"A practical tote bag for your daily essentials.",img:"photo-1548036328-c9fa89d128fa"},
+{id:13,name:"Kids Everyday Sneakers",cat:"Footwear",price:499,old:899,discount:44,rating:4.3,reviews:54,size:["10C","11C","12C","13C","1Y","2Y"],desc:"Easy-to-style shoes designed for busy little feet.",img:"photo-1514989940723-e8e51635b782",for:"Kids"},
+{id:14,name:"Women's Jeans",cat:"Women",price:799,old:1299,discount:38,rating:4.4,reviews:119,size:["26","28","30","32","34"],desc:"Versatile denim jeans for casual and everyday outfits.",img:"photo-1541099649105-f69ad21f3246"},
+{id:15,name:"Men's Sports Watch",cat:"Accessories",price:1299,old:1999,discount:35,rating:4.2,reviews:78,size:["Standard"],desc:"A sporty accessory for everyday looks.",img:"photo-1524805444758-089113d48a6d"},
+{id:16,name:"Kids Colourful T-Shirt",cat:"Kids",price:299,old:499,discount:40,rating:4.5,reviews:63,size:["2-3Y","4-5Y","6-7Y","8-9Y"],desc:"A cheerful, comfortable T-shirt for everyday adventures.",img:"photo-1503341504253-dff4815485f1"}
+].map(p=>({...p,img:`https://images.unsplash.com/${p.img}?auto=format&fit=crop&w=600&q=80`}));
+
+let category="All",search="",cart=[],selectedSizes={};
+
+const money=n=>"₹"+n.toLocaleString("en-IN");
+const stars=r=>"★".repeat(Math.round(r))+"☆".repeat(5-Math.round(r));
+
+function renderProducts(){
+ let list=products.filter(p=>(category==="All"||p.cat===category||p.for===category)&&
+ (p.name+" "+p.cat+" "+p.desc).toLowerCase().includes(search.toLowerCase()));
+ const sort=document.getElementById("sortSelect").value;
+ if(sort==="low")list.sort((a,b)=>a.price-b.price);
+ if(sort==="high")list.sort((a,b)=>b.price-a.price);
+ if(sort==="rating")list.sort((a,b)=>b.rating-a.rating);
+ document.getElementById("products").innerHTML=list.map(p=>`
+ <article class="card">
+ <img src="${p.img}" alt="${p.name}" loading="lazy" onclick="viewProduct(${p.id})" onerror="this.onerror=null;this.src='https://placehold.co/400x400/ffe0ed/aa2460?text=PinkCart'">
+ <div class="details">
+ <span class="tag">${p.cat}</span>
+ <h3>${p.name}</h3>
+ <p class="desc">${p.desc}</p>
+ <div class="rating" aria-label="${p.rating} out of 5 stars">${stars(p.rating)} <span style="color:#777">(${p.reviews})</span></div>
+ <div><span class="price">${money(p.price)}</span><span class="old">${money(p.old)}</span></div>
+ <p class="discount">${p.discount}% OFF</p>
+ <label class="size-label" for="size-${p.id}">Select Size</label>
+ <div class="sizes">${p.size.map(s=>`<button class="size ${selectedSizes[p.id]===s?'selected':''}" onclick="selectSize(${p.id},'${s}',this)">${s}</button>`).join("")}</div>
+ <div class="card-actions">
+ <button class="add" onclick="addToCart(${p.id})">🛒 Add to Cart</button>
+ <button class="view" onclick="viewProduct(${p.id})">View Details</button>
+ </div>
+ </div>
+ </article>`).join("");
+ document.getElementById("empty").style.display=list.length?"none":"block";
+ document.getElementById("sectionTitle").textContent=category==="All"?"✨ Trending Products":"✨ "+category+" Collection";
+}
+function filterCategory(cat,btn){
+ category=cat;
+ if(btn){
+ document.querySelectorAll(".filters button").forEach(b=>b.classList.remove("active"));
+ btn.classList.add("active");
+ }else{
+ document.querySelectorAll(".filters button").forEach(b=>b.classList.toggle("active",b.textContent.trim()===(cat==="All"?"All Products":cat)));
+ }
+ renderProducts();
+ document.getElementById("productsSection").scrollIntoView({behavior:"smooth",block:"start"});
+}
+function selectSize(id,size,btn){
+ selectedSizes[id]=size;
+ btn.parentElement.querySelectorAll(".size").forEach(b=>b.classList.remove("selected"));
+ btn.classList.add("selected");
+}
+function addToCart(id){
+ const p=products.find(x=>x.id===id);
+ if(!selectedSizes[id]){alert("Please select a size first!");return}
+ const existing=cart.find(x=>x.id===id&&x.size===selectedSizes[id]);
+ if(existing)existing.qty++;
+ else cart.push({id:p.id,name:p.name,price:p.price,size:selectedSizes[id],qty:1});
+ updateCart();
+ alert(p.name+" added to your cart! 🛍️");
+}
+function updateCart(){
+ document.getElementById("cartCount").textContent=cart.reduce((n,p)=>n+p.qty,0);
+}
+function showCart(){
+ const total=cart.reduce((n,p)=>n+p.price*p.qty,0);
+ document.getElementById("modalBody").innerHTML=`
+ <h2>🛒 Your Shopping Cart</h2>
+ ${cart.length?cart.map((p,i)=>`<p><strong>${p.name}</strong><br>Size: ${p.size} | Qty: ${p.qty} | ${money(p.price*p.qty)} <button onclick="removeCart(${i})" style="padding:4px 8px;cursor:pointer">Remove</button></p>`).join(""):"<p>Your cart is empty. Explore PinkCart and find your style!</p>"}
+ <hr style="margin:15px 0"><h3>Total: ${money(total)}</h3>
+ <p style="color:#777;font-size:13px">Demo website: checkout and payment are not connected.</p>
+ <button class="pill" onclick="document.getElementById('productDialog').close();document.getElementById('productsSection').scrollIntoView({behavior:'smooth'})">Continue Shopping</button>`;
+ document.getElementById("productDialog").showModal();
+}
+function removeCart(i){cart.splice(i,1);updateCart();showCart()}
+function viewProduct(id){
+ const p=products.find(x=>x.id===id);
+ document.getElementById("modalBody").innerHTML=`
+ <div class="modal-content">
+ <img src="${p.img}" alt="${p.name}" onerror="this.onerror=null;this.src='https://placehold.co/400x400/ffe0ed/aa2460?text=PinkCart'">
+ <div><span class="tag">${p.cat}</span><h2>${p.name}</h2>
+ <div class="rating">${stars(p.rating)} <span style="color:#777">${p.rating}/5 (${p.reviews} reviews)</span></div>
+ <h2>${money(p.price)} <span class="old">${money(p.old)}</span></h2>
+ <p class="discount">${p.discount}% OFF</p><p>${p.desc}</p>
+ <p><strong>Available sizes:</strong> ${p.size.join(", ")}</p>
+ <label class="size-label" for="modalSize">Choose your size</label>
+ <select id="modalSize" style="padding:10px;width:100%;margin:8px 0 15px;border:1px solid #ddd;border-radius:5px">
+ <option value="">Select size</option>${p.size.map(s=>`<option value="${s}" ${selectedSizes[id]===s?"selected":""}>${s}</option>`).join("")}
+ </select>
+ <button class="pill" onclick="modalAdd(${id})">🛒 Add to Cart</button>
+ </div></div>`;
+ document.getElementById("productDialog").showModal();
+}
+function modalAdd(id){
+ const size=document.getElementById("modalSize").value;
+ if(!size){alert("Please select a size!");return}
+ selectedSizes[id]=size;
+ const p=products.find(x=>x.id===id);
+ const existing=cart.find(x=>x.id===id&&x.size===size);
+ if(existing)existing.qty++;
+ else cart.push({id:p.id,name:p.name,price:p.price,size,qty:1});
+ updateCart();
+ document.getElementById("productDialog").close();
+ alert("Added to your PinkCart! 💗");
+}
+document.getElementById("searchForm").addEventListener("submit",e=>{
+ e.preventDefault();
+ search=document.getElementById("searchInput").value.trim();
+ renderProducts();
+ document.getElementById("productsSection").scrollIntoView({behavior:"smooth"});
+});
+renderProducts();
+</script>
+</body>
+</html>
