@@ -1,0 +1,617 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CarePlus Hospital</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #f4faff;
+    color: #263746;
+    line-height: 1.6;
+}
+
+header {
+    background: #087e8b;
+    color: white;
+    padding: 18px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.logo {
+    font-size: 26px;
+    font-weight: bold;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 9px;
+    font-weight: bold;
+}
+
+nav a:hover {
+    color: #ffe08a;
+}
+
+.hero {
+    min-height: 430px;
+    padding: 70px 8%;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(90deg, #d8f7f7, #eaf5ff);
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.hero-content {
+    flex: 1;
+    min-width: 270px;
+}
+
+.hero h1 {
+    font-size: 43px;
+    color: #075b70;
+    line-height: 1.2;
+    margin-bottom: 18px;
+}
+
+.hero p {
+    font-size: 17px;
+    margin-bottom: 22px;
+}
+
+.hero img {
+    width: 100%;
+    max-width: 450px;
+    border-radius: 18px;
+    object-fit: cover;
+    flex: 1;
+    min-width: 260px;
+    max-height: 300px;
+}
+
+.btn {
+    display: inline-block;
+    background: #087e8b;
+    color: white;
+    padding: 12px 22px;
+    border: none;
+    border-radius: 7px;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background: #075b70;
+}
+
+section {
+    padding: 55px 7%;
+    scroll-margin-top: 15px;
+}
+
+.section-title {
+    text-align: center;
+    color: #075b70;
+    font-size: 30px;
+    margin-bottom: 12px;
+}
+
+.section-intro {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 22px;
+    margin-top: 25px;
+}
+
+.card {
+    background: white;
+    padding: 24px;
+    border-radius: 13px;
+    box-shadow: 0 4px 15px #12334412;
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card h3 {
+    color: #087e8b;
+    margin: 10px 0;
+}
+
+.emoji {
+    font-size: 42px;
+}
+
+.doctor-img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.doctor-card {
+    text-align: center;
+}
+
+.doctor-card .btn {
+    margin-top: 15px;
+}
+
+.light {
+    background: #e5f7f8;
+}
+
+.hours {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    margin-top: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.hours th, .hours td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.hours th {
+    background: #087e8b;
+    color: white;
+}
+
+form {
+    max-width: 750px;
+    margin: auto;
+    background: white;
+    padding: 28px;
+    border-radius: 14px;
+    box-shadow: 0 4px 15px #12334412;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.field.full {
+    grid-column: 1 / -1;
+}
+
+label {
+    font-weight: bold;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #b8cbd4;
+    border-radius: 6px;
+    font-size: 15px;
+    background: white;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: 2px solid #087e8b;
+    outline-offset: 1px;
+}
+
+textarea {
+    resize: vertical;
+}
+
+.emergency {
+    background: #fff0ef;
+    border-left: 6px solid #d93636;
+}
+
+.emergency h2 {
+    color: #b91c1c;
+}
+
+.emergency-number {
+    font-size: 25px;
+    font-weight: bold;
+    color: #b91c1c;
+}
+
+footer {
+    text-align: center;
+    padding: 25px;
+    background: #075b70;
+    color: white;
+}
+
+#message {
+    margin-top: 15px;
+    color: #087e40;
+    font-weight: bold;
+}
+
+@media (max-width: 650px) {
+    header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 12px;
+    }
+
+    nav a {
+        margin: 0;
+    }
+
+    .hero h1 {
+        font-size: 34px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .field.full {
+        grid-column: auto;
+    }
+
+    section {
+        padding: 40px 5%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">🏥 CarePlus Hospital</div>
+    <nav aria-label="Main navigation">
+        <a href="#home">Home</a>
+        <a href="#departments">Departments</a>
+        <a href="#doctors">Doctors</a>
+        <a href="#facilities">Facilities</a>
+        <a href="#appointment">Appointment</a>
+        <a href="#contact">Contact</a>
+    </nav>
+</header>
+
+<main>
+<section class="hero" id="home">
+    <div class="hero-content">
+        <h1>Your Health, Our Priority</h1>
+        <p>Quality healthcare, experienced doctors, modern facilities
+        and compassionate care for your entire family.</p>
+        <a href="#appointment" class="btn">Book an Appointment</a>
+    </div>
+    <img
+        src="https://images.unsplash.com/photo-1586773860418-d37222d8fce3?auto=format&fit=crop&w=900&q=80"
+        alt="Modern hospital building">
+</section>
+
+<section id="departments">
+    <h2 class="section-title">Our Departments</h2>
+    <p class="section-intro">Specialized care for every stage of life.</p>
+
+    <div class="grid">
+        <article class="card">
+            <div class="emoji">❤️</div>
+            <h3>Cardiology</h3>
+            <p>Heart health assessments, diagnosis and treatment.</p>
+        </article>
+        <article class="card">
+            <div class="emoji">🧠</div>
+            <h3>Neurology</h3>
+            <p>Care for brain, nerve and neurological conditions.</p>
+        </article>
+        <article class="card">
+            <div class="emoji">🦴</div>
+            <h3>Orthopedics</h3>
+            <p>Bone, joint, injury and mobility care.</p>
+        </article>
+        <article class="card">
+            <div class="emoji">👶</div>
+            <h3>Pediatrics</h3>
+            <p>Healthcare and wellness services for children.</p>
+        </article>
+        <article class="card">
+            <div class="emoji">🩺</div>
+            <h3>General Medicine</h3>
+            <p>General consultations and preventive healthcare.</p>
+        </article>
+        <article class="card">
+            <div class="emoji">🦷</div>
+            <h3>Dentistry</h3>
+            <p>Oral examinations and dental care services.</p>
+        </article>
+    </div>
+</section>
+
+<section class="light" id="doctors">
+    <h2 class="section-title">Meet Our Doctors</h2>
+    <p class="section-intro">Choose a specialty to request a consultation.</p>
+
+    <div class="grid">
+        <article class="card doctor-card">
+            <img class="doctor-img"
+                src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=500&q=80"
+                alt="Doctor portrait">
+            <h3>Dr. Arun Kumar</h3>
+            <p>Cardiologist</p>
+            <p>Consultation: 9 AM – 1 PM</p>
+            <button class="btn" type="button"
+                onclick="chooseDoctor('Dr. Arun Kumar','Cardiology')">
+                Request Visit
+            </button>
+        </article>
+
+        <article class="card doctor-card">
+            <img class="doctor-img"
+                src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=500&q=80"
+                alt="Doctor portrait">
+            <h3>Dr. Priya Sharma</h3>
+            <p>Pediatrician</p>
+            <p>Consultation: 10 AM – 2 PM</p>
+            <button class="btn" type="button"
+                onclick="chooseDoctor('Dr. Priya Sharma','Pediatrics')">
+                Request Visit
+            </button>
+        </article>
+
+        <article class="card doctor-card">
+            <img class="doctor-img"
+                src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=500&q=80"
+                alt="Doctor portrait">
+            <h3>Dr. Rahul Reddy</h3>
+            <p>General Physician</p>
+            <p>Consultation: 2 PM – 6 PM</p>
+            <button class="btn" type="button"
+                onclick="chooseDoctor('Dr. Rahul Reddy','General Medicine')">
+                Request Visit
+            </button>
+        </article>
+    </div>
+</section>
+
+<section id="facilities">
+    <h2 class="section-title">Our Facilities</h2>
+    <div class="grid">
+        <article class="card">
+            <div class="emoji">🚑</div>
+            <h3>Emergency Care</h3>
+            <p>Emergency services and urgent medical assessment.</p>
+        </article>
+        <article class="card">
+            <div class="emoji">🔬</div>
+            <h3>Diagnostic Laboratory</h3>
+            <p>Laboratory testing and diagnostic support.</p>
+        </article>
+        <article class="card">
+            <div class="emoji">🩻</div>
+            <h3>Imaging Services</h3>
+            <p>Diagnostic imaging services, subject to availability.</p>
+        </article>
+        <article class="card">
+            <div class="emoji">🛏️</div>
+            <h3>Patient Rooms</h3>
+            <p>Inpatient rooms and patient support facilities.</p>
+        </article>
+    </div>
+</section>
+
+<section class="light" id="visiting">
+    <h2 class="section-title">Visiting Hours</h2>
+    <p class="section-intro">Example schedule — confirm with the hospital.</p>
+
+    <table class="hours">
+        <thead>
+            <tr>
+                <th scope="col">Service</th>
+                <th scope="col">Days</th>
+                <th scope="col">Hours</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Outpatient Department</td>
+                <td>Monday – Saturday</td>
+                <td>9 AM – 6 PM</td>
+            </tr>
+            <tr>
+                <td>Patient Visitors</td>
+                <td>Daily</td>
+                <td>4 PM – 6 PM</td>
+            </tr>
+            <tr>
+                <td>Emergency Department</td>
+                <td>Daily</td>
+                <td>24 hours (if available)</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+<section id="appointment">
+    <h2 class="section-title">Request an Appointment</h2>
+    <p class="section-intro">
+        Fill in your details. The hospital should confirm your appointment.
+    </p>
+
+    <form id="appointmentForm">
+        <div class="form-grid">
+            <div class="field">
+                <label for="patientName">Patient Name *</label>
+                <input id="patientName" name="patientName"
+                    type="text" autocomplete="name" required>
+            </div>
+
+            <div class="field">
+                <label for="phone">Phone Number *</label>
+                <input id="phone" name="phone" type="tel"
+                    autocomplete="tel" pattern="[0-9+\-\s]{10,15}"
+                    title="Enter a valid phone number" required>
+            </div>
+
+            <div class="field">
+                <label for="email">Email Address</label>
+                <input id="email" name="email" type="email"
+                    autocomplete="email">
+            </div>
+
+            <div class="field">
+                <label for="department">Department *</label>
+                <select id="department" name="department" required>
+                    <option value="">Select department</option>
+                    <option>Cardiology</option>
+                    <option>Neurology</option>
+                    <option>Orthopedics</option>
+                    <option>Pediatrics</option>
+                    <option>General Medicine</option>
+                    <option>Dentistry</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label for="doctor">Preferred Doctor</label>
+                <select id="doctor" name="doctor">
+                    <option value="">No preference</option>
+                    <option>Dr. Arun Kumar</option>
+                    <option>Dr. Priya Sharma</option>
+                    <option>Dr. Rahul Reddy</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label for="date">Preferred Date *</label>
+                <input id="date" name="date" type="date" required>
+            </div>
+
+            <div class="field">
+                <label for="time">Preferred Time *</label>
+                <select id="time" name="time" required>
+                    <option value="">Select a time</option>
+                    <option>9 AM – 11 AM</option>
+                    <option>11 AM – 1 PM</option>
+                    <option>2 PM – 4 PM</option>
+                    <option>4 PM – 6 PM</option>
+                </select>
+            </div>
+
+            <div class="field full">
+                <label for="reason">Reason for Visit (optional)</label>
+                <textarea id="reason" name="reason" rows="3"
+                    placeholder="Briefly describe your appointment request"></textarea>
+            </div>
+
+            <div class="field full">
+                <button class="btn" type="submit">Submit Appointment Request</button>
+            </div>
+        </div>
+        <p id="message" role="status" aria-live="polite"></p>
+    </form>
+</section>
+
+<section class="emergency" id="contact">
+    <h2 class="section-title">Emergency & Contact Information</h2>
+    <div class="grid">
+        <article class="card">
+            <h3>🚨 Medical Emergency</h3>
+            <p>In India, call the national emergency number for urgent assistance.</p>
+            <p class="emergency-number">112</p>
+            <p>For an ambulance, 108 may also be available in your area.</p>
+        </article>
+
+        <article class="card">
+            <h3>📍 Hospital Address</h3>
+            <p>CarePlus Hospital</p>
+            <p>Replace this with your hospital's real address.</p>
+        </article>
+
+        <article class="card">
+            <h3>📞 Hospital Reception</h3>
+            <p>Phone: Add your official hospital number</p>
+            <p>Email: Add your official hospital email</p>
+        </article>
+    </div>
+</section>
+</main>
+
+<footer>
+    <p>© 2026 CarePlus Hospital | Health, Care & Compassion</p>
+    <p>This is a sample website for educational purposes.</p>
+</footer>
+
+<script>
+const dateInput = document.getElementById("date");
+const today = new Date();
+const localToday = new Date(
+    today.getTime() - today.getTimezoneOffset() * 60000
+).toISOString().split("T")[0];
+
+dateInput.min = localToday;
+
+function chooseDoctor(name, department) {
+    document.getElementById("doctor").value = name;
+    document.getElementById("department").value = department;
+    document.getElementById("appointment").scrollIntoView({
+        behavior: "smooth"
+    });
+    document.getElementById("patientName").focus({
+        preventScroll: true
+    });
+}
+
+document.getElementById("appointmentForm").addEventListener(
+    "submit", function(event) {
+        event.preventDefault();
+
+        const patientName =
+            document.getElementById("patientName").value.trim();
+
+        document.getElementById("message").textContent =
+            "Thank you, " + patientName +
+            "! Your sample appointment request has been checked. " +
+            "This demo does not send bookings to a real hospital.";
+
+        this.reset();
+        dateInput.min = localToday;
+    }
+);
+</script>
+
+</body>
+</html>
